@@ -1,0 +1,11 @@
+customer_id,first_name,last_name,email,created_at
+1,Alice,Johnson,alice@example.com,2024-01-05
+2,Bob,Smith,bob@example.com,2024-01-10
+3,Carol,Williams,carol@example.com,2024-01-15
+4,David,Brown,david@example.com,2024-02-01
+5,Emma,Jones,emma@example.com,2024-02-14
+6,Frank,Davis,frank@example.com,2024-02-20
+7,Grace,Miller,grace@example.com,2024-03-01
+8,Henry,Wilson,henry@example.com,2024-03-10
+9,Iris,Moore,iris@example.com,2024-03-15
+10,Jack,Taylor,jack@example.com,2024-04-01

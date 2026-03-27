@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: customers
+    description: >
+      One row per customer with aggregated order metrics.
+      Currently includes returned orders in total_orders and total_amount — see debugging exercise.
+    columns:
+      - name: customer_id
+        description: Primary key.
+        tests:
+          - not_null
+          - unique
+      - name: full_name
+        description: Customer full name.
+      - name: email
+        description: Customer email address.
+      - name: created_date
+        description: Date the customer signed up.
+      - name: total_orders
+        description: Total number of orders placed, including returned orders.
+      - name: total_amount
+        description: Total order value in USD, including returned orders.
+      - name: first_order_date
+        description: Date of the customer's first order.
+      - name: most_recent_order_date
+        description: Date of the customer's most recent order.
