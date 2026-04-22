@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: workshop
+    tables:
+      - name: raw_customers
+        description: Raw customer data loaded from seed.
+      - name: raw_orders
+        description: Raw order data loaded from seed.
+      - name: raw_payments
+        description: Raw payment data loaded from seed.

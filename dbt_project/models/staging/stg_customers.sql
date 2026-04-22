@@ -7,12 +7,11 @@ with source as (
 renamed as (
 
     select
-        customer_id,
+        id as customer_id,
         first_name,
         last_name,
         first_name || ' ' || last_name as full_name,
-        email,
-        created_at::date as created_date
+        email
     from source
 
 )

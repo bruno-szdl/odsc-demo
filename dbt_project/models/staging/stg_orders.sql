@@ -7,11 +7,10 @@ with source as (
 renamed as (
 
     select
-        order_id,
+        id as order_id,
         customer_id,
-        order_date::date as order_date,
-        status,
-        amount
+        order_date,
+        status as order_status
     from source
 
 )

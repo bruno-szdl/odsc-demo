@@ -1,7 +1,7 @@
-odsc_demo:
+dbt_claude_workshop:
   target: dev
   outputs:
     dev:
       type: duckdb
-      path: "dev.duckdb"
+      path: "./workshop.duckdb"
       threads: 4

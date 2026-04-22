@@ -12,12 +12,9 @@ orders as (
 
 customer_orders as (
 
-    -- NOTE (debugging exercise): this aggregation includes returned orders.
-    -- Is that the right behavior for total_orders and total_amount?
     select
         customer_id,
         count(*)                         as total_orders,
-        sum(amount)                      as total_amount,
         min(order_date)                  as first_order_date,
         max(order_date)                  as most_recent_order_date
     from orders
@@ -31,9 +28,7 @@ final as (
         c.customer_id,
         c.full_name,
         c.email,
-        c.created_date,
         coalesce(o.total_orders, 0)      as total_orders,
-        coalesce(o.total_amount, 0.0)    as total_amount,
         o.first_order_date,
         o.most_recent_order_date
     from customers c
