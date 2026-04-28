@@ -4,7 +4,7 @@ This is a dbt project for a workshop on using Claude with dbt. It uses DuckDB as
 
 ## Project layout
 
-The dbt project lives in `dbt_project/`. Always `cd dbt_project` before running dbt commands.
+The dbt project lives in `dbt_project/`.
 
 - Adapter: dbt-duckdb
 - Profile: `dbt_project/profiles.yml` (path: `./workshop.duckdb`)
@@ -13,9 +13,14 @@ The dbt project lives in `dbt_project/`. Always `cd dbt_project` before running 
 - Intermediate: aggregations and joins, materialized as views
 - Marts: final business entities, materialized as tables
 
-## Common commands
+## Running dbt
+
+Prefer the MCP dbt tool (`mcp__dbt__build`, `mcp__dbt__run`, `mcp__dbt__test`, etc.) — it is configured automatically via `.mcp.json`, no setup needed.
+
+For bash fallback, activate the project venv first — the system `dbt` lacks the duckdb adapter:
 
 ```bash
+source .venv/bin/activate
 cd dbt_project
 dbt deps              # install packages (run once)
 dbt seed              # load CSV seed data

@@ -57,7 +57,7 @@ pip install dbt-core dbt-duckdb uv
 dbt --version
 
 # 5. Move into the dbt project folder
-cd dbt_claude_workshop
+cd dbt_project
 
 # 6. Install dbt packages
 dbt deps
@@ -78,7 +78,6 @@ Running `dbt build` will create a local `workshop.duckdb` file with all seeds lo
 ```
 odsc-demo/
 ├── README.md
-├── TOOLKIT.md                      # Reference guide: how to use Claude with dbt
 ├── .mcp.json                       # dbt MCP server config for Claude Code
 ├── .claude/
 │   └── skills/                     # Project-specific Claude skills
@@ -92,7 +91,7 @@ odsc-demo/
 │   ├── 03-tests-and-docs.md
 │   ├── 04-debugging.md
 │   └── 05-exploring-project.md
-├── dbt_claude_workshop/            # dbt project lives here
+├── dbt_project/            # dbt project lives here
 │   ├── dbt_project.yml
 │   ├── profiles.yml                # DuckDB local connection
 │   ├── packages.yml
@@ -119,18 +118,7 @@ Staging models are materialized as **views**. Mart models are materialized as **
 
 ## Connecting Claude Code (dbt MCP)
 
-The `.mcp.json` file in this repo configures the dbt MCP server for Claude Code. Once you have `uvx` available (`pip install uv`), Claude Code will automatically pick it up when you open this project.
-
-Before starting Claude Code, copy `.env.example` to `.env` and set both variables:
-
-```bash
-cp .env.example .env
-```
-
-| Variable | What to set |
-|----------|-------------|
-| `DBT_PATH` | Path to your dbt executable — run `which dbt` (macOS/Linux) or `where dbt` (Windows) after activating your venv |
-| `DBT_PROJECT_DIR` | Path to the dbt project folder — `./dbt_project` (default, no change needed) |
+The `.mcp.json` file in this repo configures the dbt MCP server for Claude Code. Once you have `uvx` available (`pip install uv`), Claude Code will automatically pick it up when you open this project — no additional setup needed.
 
 ---
 

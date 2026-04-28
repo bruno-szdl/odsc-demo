@@ -1,6 +1,3 @@
-# Local env (contains user-specific paths)
-.env
-
 # dbt
 target/
 dbt_packages/
