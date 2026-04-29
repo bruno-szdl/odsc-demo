@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "dbt@dbt-agent-marketplace": true,
+    "dbt-migration@dbt-agent-marketplace": true
+  }
+}
