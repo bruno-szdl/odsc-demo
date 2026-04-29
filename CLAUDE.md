@@ -35,9 +35,4 @@ dbt compile --select model_name  # see compiled SQL without running
 - Never modify files in `seeds/` — those are source data
 - Always run `dbt build` after making changes to validate
 - Always generate schema YAML (descriptions + tests) alongside new models
-- Never join a one-to-many table without aggregating first
 - Use `ref()` for all model references — never hardcode table names
-
-## Key data relationship
-
-Orders and payments have a one-to-many relationship: one order can have multiple payments (split payments). Be mindful of cardinality when joining these entities.
