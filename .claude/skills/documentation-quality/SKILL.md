@@ -2,11 +2,7 @@
 name: documentation-quality
 description: >
   Use when writing, generating, or reviewing descriptions in YAML schema files, including model
-  descriptions and column descriptions. Also use when naming new models, columns, or files — this
-  skill is the source of truth for all naming conventions. Always use this skill when creating or
-  updating schema.yml files, adding documentation to models, writing column descriptions, or when
-  someone asks to improve or generate dbt documentation. Also use when generating tests alongside
-  descriptions. This skill ensures documentation is genuinely useful, not filler.
+  descriptions and column descriptions. Also use when naming new models, columns, or files. Always use this skill when creating or updating schema.yml files, adding documentation to models, writing column descriptions, or when someone asks to improve or generate dbt documentation.
 ---
 
 # Documentation Quality Standards

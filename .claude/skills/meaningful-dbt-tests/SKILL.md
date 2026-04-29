@@ -1,14 +1,7 @@
 ---
 name: meaningful-dbt-tests
 description: >
-  Use when writing, adding, or reviewing dbt tests in any schema YAML file in this project.
-  Always use this skill when someone asks to "add tests", "improve test coverage", or "make
-  tests more comprehensive". This skill goes beyond not_null and unique — it teaches the
-  Action Step Test filter, impact-based severity, column classification, dbt_utils syntax,
-  and model-level invariants. Critically, it also defines what NOT to test to avoid alert
-  fatigue. Every test is a query with a cost; tests are added mindfully, not reflexively.
-  For description quality and naming conventions, see the documentation-quality skill.
-  For SQL patterns and CTE structure, see the project-style-guide skill.
+  Use when writing, adding, or reviewing dbt tests in this project. Use this skill when someone asks to "add tests", "improve test coverage", or "make tests more comprehensive".
 ---
 
 # Meaningful dbt Tests

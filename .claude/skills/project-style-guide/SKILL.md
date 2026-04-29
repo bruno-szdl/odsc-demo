@@ -1,19 +1,14 @@
 ---
 name: project-style-guide
 description: >
-  Use when creating, modifying, or reviewing any SQL model or dbt resource
-  in this project. Always use this skill when writing new models, refactoring
-  existing ones, adding columns, structuring CTEs, choosing materializations,
-  or joining tables. This skill covers SQL patterns, formatting, folder
-  structure, and the aggregation rule. For naming conventions and documentation
-  standards, see the documentation-quality skill.
+  Use when creating, modifying, or reviewing any SQL model or dbt resource in this project. Use this skill when writing new models, refactoring existing ones, adding columns, structuring CTEs, or choosing materializations.
 ---
 
 # Project Style Guide
 
 This skill defines the SQL patterns, formatting rules, and structural conventions
 for this project. For naming conventions (models, columns, files) and documentation
-quality standards, see the `documentation-quality` skill.
+quality standards, see the `documentation-quality` skill. For defining tests, see the `meaningful-dbt-tests` skill.
 
 ## CTE Pattern
 
@@ -99,49 +94,6 @@ select * from customers
 | Intermediate | `view` |
 | Marts | `table` |
 
-## The Aggregation Rule
-
-**NEVER join a table with a one-to-many relationship without aggregating first.**
-
-This is the single most important rule in this project. When a table has multiple rows per key (e.g., line items per invoice, reviews per product, transactions per account), you MUST aggregate in a separate CTE or intermediate model BEFORE joining. A direct join creates row duplication (fan-out).
-
-```sql
--- ✅ CORRECT: aggregate the many-side first, then join
-product_reviews as (
-    select
-        product_id,
-        count(*) as number_of_reviews,
-        avg(rating) as average_rating
-    from reviews
-    group by product_id
-),
-
-final as (
-    select
-        products.product_id,
-        products.product_name,
-        coalesce(product_reviews.number_of_reviews, 0) as number_of_reviews,
-        product_reviews.average_rating
-    from products
-    left join product_reviews on products.product_id = product_reviews.product_id
-)
-```
-
-```sql
--- ❌ WRONG: direct join creates duplicates
-final as (
-    select
-        products.product_id,
-        products.product_name,
-        reviews.rating
-    from products
-    left join reviews on products.product_id = reviews.product_id
-)
--- A product with 5 reviews produces 5 rows instead of 1
-```
-
-If the same aggregation is needed by more than one mart, extract it into an **intermediate model** rather than repeating the logic.
-
 ## Folder Structure
 
 ```
@@ -165,6 +117,10 @@ Rules:
 - Each layer has its own schema YAML file prefixed with `_`
 - Schema files: `_<layer>_models.yml`
 - Source files: `_<layer>_sources.yml`
+- Always define tests and create documentation for models.
+- Use the `meaningful-dbt-tests` skill to define tests for models
+- Use the `document-quality` skill to create documentation for models
+
 
 ## Data Domain Context
 
