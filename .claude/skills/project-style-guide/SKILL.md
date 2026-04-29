@@ -128,6 +128,4 @@ This project models a simple e-commerce business:
 
 - **Customers** — people with accounts (may or may not have ordered)
 - **Orders** — purchases with a lifecycle status: placed → shipped → completed or returned
-- **Payments** — individual payment transactions. **One order can have multiple payments** (split payments with different methods)
-
-Be aware of the cardinality between these entities when joining them — apply the aggregation rule above wherever a one-to-many relationship exists.
+- **Payments** — individual payment transactions.
