@@ -182,6 +182,7 @@ range bounds — but only when you have a clear remediation step and know the se
     - dbt_utils.expression_is_true:
         arguments:
           expression: ">= 0"
+          # Column name is prepended automatically: compiles to WHERE NOT (amount_cents >= 0)
           # Remediation: trace the payment record back to raw_payments and check the amount field
 
 # ✅ Correct — amount (USD): derived from amount_cents; same rationale
@@ -242,12 +243,13 @@ Use when a violation would indicate a model logic bug worth pipeline failure.
 
 ```yaml
 # ✅ Correct — customers mart: first_order_date must not exceed most_recent_order_date
+# Note: add a null guard when date columns are nullable (customers with no orders have null dates)
 models:
   - name: customers
     tests:
       - dbt_utils.expression_is_true:
           arguments:
-            expression: "first_order_date <= most_recent_order_date"
+            expression: "first_order_date is null or first_order_date <= most_recent_order_date"
             # Remediation: a violation means min/max are swapped in the customer_orders CTE
     columns:
       ...
@@ -286,34 +288,48 @@ Use when there is no single-column PK but the model must be unique on a combinat
 
 ## dbt_utils Syntax Reference
 
-dbt_utils tests wrap all parameters under `arguments:`. The `config:` block is a sibling of
+dbt_utils tests wrap parameters under `arguments:`. The `config:` block is a sibling of
 `arguments:`, not nested inside it.
 
 ```yaml
 # Full structure showing both arguments and config
 - dbt_utils.expression_is_true:
     arguments:
-      expression: ">= 0"     # For column-scoped form, the column name is prepended automatically
+      expression: ">= 0"
     config:
       severity: warn
 ```
 
-**Column-scoped `expression_is_true`** — inside a `column` block; dbt prepends the column name:
+**Column-scoped `expression_is_true`** — inside a `column` block; dbt_utils prepends the
+column name automatically. Write only the operator and value, NOT the column name:
+
 ```yaml
+# ✅ Correct — dbt_utils compiles this to: WHERE NOT (amount >= 0)
 - name: amount
   tests:
     - dbt_utils.expression_is_true:
         arguments:
-          expression: ">= 0"   # Compiled as: WHERE NOT (amount >= 0)
+          expression: ">= 0"
+
+# ❌ Wrong — dbt_utils prepends the column name, producing: WHERE NOT (amount amount >= 0)
+- name: amount
+  tests:
+    - dbt_utils.expression_is_true:
+        arguments:
+          expression: "amount >= 0"
 ```
 
-**Model-scoped `expression_is_true`** — inside the model's `tests:` block; expression is standalone:
+**Model-scoped `expression_is_true`** — inside the model's `tests:` block; expression is
+evaluated as written. Use the full expression including column names. Add null guards for
+nullable columns to avoid false failures:
+
 ```yaml
 tests:
   - dbt_utils.expression_is_true:
       arguments:
-        expression: "first_order_date <= most_recent_order_date"
-        # Compiled as: WHERE NOT (first_order_date <= most_recent_order_date)
+        expression: "first_order_date is null or first_order_date <= most_recent_order_date"
+        # Null guard required: customers with no orders have null dates; NULL <= NULL is NULL,
+        # which would be treated as a test failure without the guard
 ```
 
 ---
